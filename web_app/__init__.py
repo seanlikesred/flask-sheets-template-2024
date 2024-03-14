@@ -12,6 +12,7 @@ from app.spreadsheet_service import SpreadsheetService
 from web_app.routes.home_routes import home_routes
 from web_app.routes.auth_routes import auth_routes
 from web_app.routes.user_routes import user_routes
+from web_app.routes.product_routes import product_routes
 
 load_dotenv()
 
@@ -33,6 +34,7 @@ GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 # for google analytics (universal analytics):
 GA_TRACKER_ID = os.getenv("GA_TRACKER_ID", default="G-OOPS")
 #GA_DOMAIN = os.getenv("GA_DOMAIN", default="http://localhost:5000") # in production set to "________"
+
 
 
 def create_app(spreadsheet_service=None):
@@ -95,6 +97,7 @@ def create_app(spreadsheet_service=None):
     app.register_blueprint(home_routes)
     app.register_blueprint(auth_routes)
     app.register_blueprint(user_routes)
+    app.register_blueprint(product_routes)
 
     return app
 
