@@ -25,5 +25,11 @@ class DateParser:
 
             Returns a datetime object.
         """
-        date_format = "%Y-%m-%d %H:%M:%S.%f%z"
-        return datetime.strptime(ts, date_format)
+        if isinstance(ts, datetime):
+            return ts
+        elif isinstance(ts, str):
+            date_format = "%Y-%m-%d %H:%M:%S.%f%z"
+            return datetime.strptime(ts, date_format)
+        #else:
+        #    # something went wrong! use original value. consider raising error
+        #    return ts

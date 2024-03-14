@@ -85,15 +85,11 @@ python -m app.spreadsheet_service
 Populating the Google Sheets database with example records (i.e. "seeds"):
 
 ```sh
-python -m app.seed_books
+python -m app.models.product
 
-python -m app.seed_rooms
+python -m app.models.order
 
-python -m app.seed_teams
-
-python -m app.seed_products
-
-python -m app.seed_stocks
+python -m app.models.team
 ```
 
 

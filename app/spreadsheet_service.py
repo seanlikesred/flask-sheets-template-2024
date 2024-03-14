@@ -10,6 +10,7 @@ import os
 from datetime import datetime, timezone
 from pprint import pprint
 from typing import List
+from functools import cached_property
 
 from dotenv import load_dotenv
 from gspread import service_account, Worksheet
@@ -32,9 +33,13 @@ class SpreadsheetService(DateParser):
         self.client = service_account(filename=credentials_filepath)
         self.document_id = document_id
 
-    @property
+        print("SPREADSHEET SERVICE...")
+        print("DOCUMENT ID:", self.document_id)
+
+
+    @cached_property
     def doc(self):
-        """Get the given document. NOTE: this will make an API call each time, to get the new data."""
+        """Get the given document. NOTE: this will make an API call."""
         return self.client.open_by_key(self.document_id) #> <class 'gspread.models.Spreadsheet'>
 
     @property
@@ -46,17 +51,27 @@ class SpreadsheetService(DateParser):
         """Get a specific sheet in the document."""
         return self.doc.worksheet(sheet_name)
 
-    #def find_or_create_sheet(self, sheet_name)-> Worksheet:
-    #    """access a sheet within the document, or create if not exists"""
-    #    try:
-    #        sheet = self.doc.worksheet(sheet_name)
-    #    except WorksheetNotFound:
-    #        print("CREATING NEW SHEET...")
-    #        sheet = self.doc.add_worksheet(title=sheet_name, rows="10", cols="10")
-    #
-    #    return sheet
+    def find_or_create_sheet(self, sheet_name) -> Worksheet:
+        """access a sheet within the document, or create if not exists"""
+        try:
+            sheet = self.doc.worksheet(sheet_name)
+            print(f"FOUND SHEET: '{sheet_name}'")
+        except WorksheetNotFound:
+            print(f"CREATING NEW SHEET ('{sheet_name}')...")
+            sheet = self.doc.add_worksheet(title=sheet_name, rows="3", cols="3") # rows and cols are required. can be overwritten later?
+            # todo: add columns self.COLUMNS
+        return sheet
 
     # RECORDS
+
+    #def write_to_sheet(self, sheet_name, records):
+    #    sheet = self.doc.worksheet(sheet_name)
+    #    #records = sheet.get_all_records()
+#
+    #    breakpoint()
+#
+    #    #values = [record.values() for record in records]
+    #    sheet.append_rows(values=records)
 
     #def get_records(self, sheet_name):
     #    """Gets all records from a given sheet,
@@ -74,12 +89,12 @@ class SpreadsheetService(DateParser):
 
     # DELETING DATA
 
-    def destroy_all(self, sheet_name):
-        """Removes all records from a given sheet, except the header row."""
-        sheet, records = self.get_records(sheet_name)
-        # start on the second row, and delete one more than the number of records,
-        # ... to account for the header row
-        sheet.delete_rows(start_index=2, end_index=len(records)+1)
+    #def destroy_all(self, sheet_name):
+    #    """Removes all records from a given sheet, except the header row."""
+    #    sheet, records = self.get_records(sheet_name)
+    #    # start on the second row, and delete one more than the number of records,
+    #    # ... to account for the header row
+    #    sheet.delete_rows(start_index=2, end_index=len(records)+1)
 
     #def get_products(self):
     #    _, products = self.get_records("products")
@@ -169,9 +184,9 @@ if __name__ == "__main__":
 
     ss = SpreadsheetService()
 
-    print("---------------")
-    print("SPREADSHEET SERVICE...")
-    print("DOCUMENT:", ss.document_id)
+    #print("---------------")
+    #print("SPREADSHEET SERVICE...")
+    #print("DOCUMENT:", ss.document_id)
 
     print("SHEETS:")
     sheets = ss.sheets
