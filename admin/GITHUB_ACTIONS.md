@@ -1,7 +1,7 @@
 
-# CI
+# Continuous Integration with GitHub Actions
 
-For configuring Continuous Integration for this Python Application using GitHub Actions.
+We are using GitHub Actions to handle Continuous Integration for this Python Application.
 
 The "python-app.yml" [configuration file](/.github/workflows/python-app.yml) specifies what steps should take place during the CI build.
 
