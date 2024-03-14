@@ -13,7 +13,7 @@ from typing import List
 
 from dotenv import load_dotenv
 from gspread import service_account, Worksheet
-from gspread.exceptions import SpreadsheetNotFound
+from gspread.exceptions import SpreadsheetNotFound, WorksheetNotFound
 
 
 load_dotenv()
@@ -23,41 +23,14 @@ GOOGLE_CREDENTIALS_FILEPATH = os.getenv("GOOGLE_CREDENTIALS_FILEPATH", default=D
 
 GOOGLE_SHEETS_DOCUMENT_ID = os.getenv("GOOGLE_SHEETS_DOCUMENT_ID", default="OOPS, Please get the spreadsheet identifier from its URL, and set the 'GOOGLE_SHEETS_DOCUMENT_ID' environment variable accordingly...")
 
+from app.date_parser import DateParser
 
-class SpreadsheetService:
+
+class SpreadsheetService(DateParser):
 
     def __init__(self, credentials_filepath=GOOGLE_CREDENTIALS_FILEPATH, document_id=GOOGLE_SHEETS_DOCUMENT_ID):
         self.client = service_account(filename=credentials_filepath)
         self.document_id = document_id
-
-    #
-    # HELPER METHODS (DATE FORMATTING)
-    #
-
-    @staticmethod
-    def generate_timestamp():
-        """Generates a new timestamp of the current time in UTC timezone.
-            Returns a datetime object.
-        """
-        return datetime.now(tz=timezone.utc)
-
-    @staticmethod
-    def parse_timestamp(ts:str):
-        """Converts a timestamp string to a datetime object.
-
-            Params:
-                ts (str) : a timestamp string in format provided by google sheets
-
-            Example: SpreadsheetService.parse_timestamp('2023-03-08 19:59:16.471152+00:00')
-
-            Returns a datetime object.
-        """
-        date_format = "%Y-%m-%d %H:%M:%S.%f%z"
-        return datetime.strptime(ts, date_format)
-
-    #
-    # READING DATA
-    #
 
     @property
     def doc(self):
@@ -73,19 +46,31 @@ class SpreadsheetService:
         """Get a specific sheet in the document."""
         return self.doc.worksheet(sheet_name)
 
-    def get_records(self, sheet_name):
-        """Gets all records from a given sheet,
-            converts datetime columns back to Python datetime objects
-        """
-        #print(f"GETTING RECORDS FROM SHEET: '{sheet_name}'")
-        sheet = self.get_sheet(sheet_name) #> <class 'gspread.models.Worksheet'>
-        records = sheet.get_all_records() #> <class 'list'>
+    #def find_or_create_sheet(self, sheet_name)-> Worksheet:
+    #    """access a sheet within the document, or create if not exists"""
+    #    try:
+    #        sheet = self.doc.worksheet(sheet_name)
+    #    except WorksheetNotFound:
+    #        print("CREATING NEW SHEET...")
+    #        sheet = self.doc.add_worksheet(title=sheet_name, rows="10", cols="10")
+    #
+    #    return sheet
 
-        # todo: if any columns are datetime related
-        for record in records:
-            if record.get("created_at"):
-                record["created_at"] = self.parse_timestamp(record["created_at"])
-        return sheet, records
+    # RECORDS
+
+    #def get_records(self, sheet_name):
+    #    """Gets all records from a given sheet,
+    #        converts datetime columns back to Python datetime objects.
+    #    """
+    #    #print(f"GETTING RECORDS FROM SHEET: '{sheet_name}'")
+    #    sheet = self.get_sheet(sheet_name) #> <class 'gspread.models.Worksheet'>
+    #    records = sheet.get_all_records() #> <class 'list'>
+    #
+    #    # todo: if any columns are datetime related
+    #    for record in records:
+    #        if record.get("created_at"):
+    #            record["created_at"] = self.parse_timestamp(record["created_at"])
+    #    return sheet, records
 
     # DELETING DATA
 
@@ -113,6 +98,19 @@ class SpreadsheetService:
     #
     # FYI: we could consider implementing a locking mechanism on sheet writes, to prevent overwriting (if it becomes an issue)
     # ... however we know that if we want a more serious database solution, we would choose SQL database (and this app is just a small scale demo)
+
+    #def write_data_to_sheet(df, sheet):
+    #    header_row = df.columns.tolist()
+    #
+    #    rows = df.values.tolist()
+    #    assert len(header_row) == len(rows[0]) # same number of columns in all rows
+    #
+    #    all_rows = [header_row] + rows
+    #
+    #    sheet.clear()
+    #
+    #    sheet.update(all_rows)
+
 
     #def seed_products(self):
     #    sheet, products = self.get_records("products")
@@ -173,19 +171,23 @@ if __name__ == "__main__":
 
     print("---------------")
     print("SPREADSHEET SERVICE...")
-
     print("DOCUMENT:", ss.document_id)
 
     print("SHEETS:")
-    for sheet in ss.sheets:
+    sheets = ss.sheets
+    for sheet in sheets:
         #print(type(sheet)) #> <class 'gspread.worksheet.Worksheet'>
         print("...", sheet)
 
+    sheet_name = input("Please choose a sheet name: ") or sheets[0].title
+    print(sheet_name)
 
-    #print(ss.generate_timestamp())
+    #sheet, records = ss.get_records(sheet_name)
+    sheet = ss.get_sheet(sheet_name)
+    records = sheet.get_all_records()
 
-    #sheet, records = ss.get_records("products")
-    #
-    #for record in records:
-    #    print("-----")
-    #    pprint(record)
+    print("RECORDS:")
+    print(len(records))
+    for record in records:
+        print("-----")
+        pprint(record)

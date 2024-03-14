@@ -12,7 +12,7 @@ from web_app import create_app
 load_dotenv()
 
 # an example sheet that is being used for testing purposes:
-GOOGLE_SHEETS_TEST_DOCUMENT_ID= os.getenv("GOOGLE_SHEETS_TEST_DOCUMENT_ID", default="1TZCr9x6CZmlccSKgpOkAIE6dCfRmS_83tSlb_GyALsw")
+GOOGLE_SHEETS_TEST_DOCUMENT_ID= os.getenv("GOOGLE_SHEETS_TEST_DOCUMENT_ID")
 TEST_SLEEP = int(os.getenv("TEST_SLEEP", default="10"))
 
 # it would be nice to reset the database for each test, but we are hitting rate limits
@@ -23,11 +23,11 @@ def ss():
     ss = SpreadsheetService(document_id=GOOGLE_SHEETS_TEST_DOCUMENT_ID)
 
     # setup / remove any records that may exist:
-    ss.destroy_all("products")
-    ss.destroy_all("orders")
+    #ss.destroy_all("products")
+    #ss.destroy_all("orders")
 
     # seed default products:
-    ss.seed_products()
+    #ss.seed_products()
 
     yield ss
 
