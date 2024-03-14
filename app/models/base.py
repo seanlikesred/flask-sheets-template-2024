@@ -23,6 +23,16 @@ class BaseModel:
         # attributes common to all child models
         self.id = attrs.get("id")
 
+        for col in self.COLUMNS:
+            #setattr(self, col, self.attrs.get(col))
+            val = self.attrs.get(col)
+            #if val.startswith("20"):
+            # convert datetime parsable string to datetime object, dynamically
+            if self.ss.validate_timestamp(val):
+                val = self.ss.parse_timestamp(val)
+            setattr(self, col, val)
+
+
     @property
     def created_at(self):
         return self.ss.parse_timestamp(self.attrs.get("created_at"))
@@ -42,6 +52,7 @@ class BaseModel:
 
     @property
     def row(self):
+        """Returns a list of serializable values, for writing to the sheet."""
         values = []
         values.append(self.id)
         for col in self.COLUMNS:
@@ -65,25 +76,27 @@ class BaseModel:
        return cls.ss.get_sheet(sheet_name=cls.SHEET_NAME)
 
     @classmethod
-    def find_all(cls):
+    def find_all(cls, sheet=None):
         #sheet = cls.ss.find_or_create_sheet(sheet_name=cls.SHEET_NAME)
         #sheet = cls.ss.get_sheet(sheet_name=cls.SHEET_NAME) # assumes sheet exists, with the proper headers!
-        sheet = cls.get_sheet() # assumes sheet exists, with the proper headers!
+        sheet = sheet or cls.get_sheet() # assumes sheet exists, with the proper headers!
         #return sheet.get_all_records()
         records = sheet.get_all_records()
         return [cls(record) for record in records]
 
     @classmethod
     def create_records(cls, new_records, records=[]):
-
+        """Appends new records (list of dictionaries) to the sheet.
+            Adds auto-incrementing unique identifiers, and timestamp columns.
+        """
         sheet = cls.get_sheet() # assumes sheet exists, with the proper headers!
 
-        records = records or cls.find_all()
-        next_row_number = len(records) + 2 # plus headers plus one
+        records = records or cls.find_all(sheet=sheet)
+        #next_row_number = len(records) + 2 # plus headers plus one
 
         # auto-increment integer identifier
         if any(records):
-            existing_ids = [r["id"] for r in records]
+            existing_ids = [r.id for r in records]
             next_id = max(existing_ids) + 1
         else:
             next_id = 1
@@ -99,8 +112,7 @@ class BaseModel:
             rows.append(inst.row)
             next_id += 1
 
-        #return cls.sheet.insert_rows(new_rows, row=next_row_number)
-
+        #return sheet.insert_rows(rows, row=next_row_number)
         return sheet.append_rows(rows)
 
 

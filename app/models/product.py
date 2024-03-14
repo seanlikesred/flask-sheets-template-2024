@@ -30,13 +30,13 @@ class Product(BaseModel):
         }
     ]
 
-    def __init__(self, attrs):
-        super().__init__(attrs=attrs)
-
-        self.name = attrs.get("name")
-        self.description = attrs.get("description")
-        self.price = attrs.get("price")
-        self.url = attrs.get("url")
+    #def __init__(self, attrs):
+    #    super().__init__(attrs=attrs)
+    #
+    #    self.name = attrs.get("name")
+    #    self.description = attrs.get("description")
+    #    self.price = attrs.get("price")
+    #    self.url = attrs.get("url")
 
     #@property
     #def row(self):
@@ -56,3 +56,6 @@ if __name__ == "__main__":
         will_seed = input("Seed products? (y/n)? ").upper()
         if will_seed == "Y":
             Product.seed()
+
+    #breakpoint()
+    #Product.seed()

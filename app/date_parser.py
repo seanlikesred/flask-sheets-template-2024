@@ -2,9 +2,10 @@
 from datetime import datetime, timezone
 
 
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S.%f%z"
+
 class DateParser:
     """Mixin for date parsing / interfacing with google sheets date formatting."""
-
 
     @staticmethod
     def generate_timestamp():
@@ -12,7 +13,6 @@ class DateParser:
             Returns a datetime object.
         """
         return datetime.now(tz=timezone.utc)
-
 
     @staticmethod
     def parse_timestamp(ts:str):
@@ -28,8 +28,15 @@ class DateParser:
         if isinstance(ts, datetime):
             return ts
         elif isinstance(ts, str):
-            date_format = "%Y-%m-%d %H:%M:%S.%f%z"
-            return datetime.strptime(ts, date_format)
+            return datetime.strptime(ts, DATE_FORMAT)
         #else:
         #    # something went wrong! use original value. consider raising error
         #    return ts
+
+    @staticmethod
+    def validate_timestamp(ts:str):
+        try:
+            datetime.strptime(ts, DATE_FORMAT)
+            return True
+        except:
+            return False
