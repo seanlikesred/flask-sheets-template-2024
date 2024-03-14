@@ -115,68 +115,10 @@ class BaseModel:
         #return sheet.insert_rows(rows, row=next_row_number)
         return sheet.append_rows(rows)
 
-
-
-
     @classmethod
-    def seed(cls):
-        #sheet = cls.ss.find_or_create_sheet(sheet_name=cls.SHEET_NAME)
-        #sheet = cls.sheet
-        #records = cls.SEEDS
-        #breakpoint()
-        #values = list(records[0].values()) #> ['Strawberries', 'Juicy organic strawberries.', 4.99, 'https://picsum.photos/id/1080/360/200']
-        #sheet.append_rows(values=records)
-        #cls.ss.write_to_sheet(sheet_name=cls.SHEET_NAME, records=cls.SEEDS)
-
-        return cls.create_records(cls.SEEDS)
-
-
-
+    def seed_records(cls):
+        return cls.create_records(new_records=cls.SEEDS)
 
 
     #def save(self):
     #    print("SAVING RECORD TO SHEET: ____")
-
-
-    #@property
-    #@abstractmethod
-    #def seeds() -> List[Dict]:
-    #    """To be implemented in child class.
-    #        Records to be populated in the sheet.
-    #    """
-    #    return []
-
-
-    #@property
-    #@classmethod
-    #@abstractmethod
-    #def sheet_name(self) -> str:
-    #    """To be implemented in child class.
-    #
-    #        Should return the name of the corresponding sheet for this model.
-    #
-    #        Example:
-    #
-    #            @property
-    #            def sheet_name(self):
-    #                return "products"
-    #    """
-    #    return "todo"
-
-    #@property
-    #@abstractmethod
-    #def to_row(self) -> List:
-    #    """To be implemented in child class.
-    #
-    #        Should return a list of attributes in the same order as the columns in the corresponding sheet.
-    #
-    #        Values need to be "serializable", in other words dates and complex objects like dates need to be converted to simple scalar values such as strings.
-    #
-    #        Example:
-    #
-    #            @property
-    #            def to_row(self):
-    #                return [self.id, self.name, self.description, self.price, self.url, str(self.created_at)]
-    #
-    #    """
-    #    return []

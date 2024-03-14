@@ -55,7 +55,7 @@ if __name__ == "__main__":
     else:
         will_seed = input("Seed products? (y/n)? ").upper()
         if will_seed == "Y":
-            Product.seed()
+            Product.seed_records()
 
     #breakpoint()
     #Product.seed()
