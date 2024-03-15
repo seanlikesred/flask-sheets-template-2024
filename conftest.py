@@ -6,8 +6,10 @@ from time import sleep
 from dotenv import load_dotenv
 
 from app.spreadsheet_service import SpreadsheetService
-from web_app import create_app
+from app.models.base import BaseModel
+from app.models.book import Book
 
+from web_app import create_app
 
 load_dotenv()
 
@@ -15,27 +17,45 @@ load_dotenv()
 GOOGLE_SHEETS_TEST_DOCUMENT_ID= os.getenv("GOOGLE_SHEETS_TEST_DOCUMENT_ID")
 TEST_SLEEP = int(os.getenv("TEST_SLEEP", default="10"))
 
-# it would be nice to reset the database for each test, but we are hitting rate limits
-# we could consider using a single instance of the test database, but maybe that's worse than sleeping after each test?
-@pytest.fixture() # scope="module"
+
+@pytest.fixture()
 def ss():
-    """spreadsheet service to use when testing"""
+    """Spreadsheet service connected to the test document. Sleeps to avoid rate limits."""
     ss = SpreadsheetService(document_id=GOOGLE_SHEETS_TEST_DOCUMENT_ID)
-
-    # setup / remove any records that may exist:
-    #ss.destroy_all("products")
-    #ss.destroy_all("orders")
-
-    # seed default products:
-    #ss.seed_products()
 
     yield ss
 
-    # clean up:
-    #ss.destroy_all("products")
-    #ss.destroy_all("orders")
     print("SLEEPING...")
     sleep(TEST_SLEEP)
+
+
+@pytest.fixture()
+def model_context():
+    """Use this fixture and subsequent model calls will be made against the test database."""
+    BaseModel.set_document_id(GOOGLE_SHEETS_TEST_DOCUMENT_ID)
+    assert BaseModel.ss.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
+    assert Book.ss.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
+
+    yield "Using test document!"
+
+
+#@pytest.fixture()
+#def books_context(model_context):
+#
+#    #BaseModel.set_document_id(GOOGLE_SHEETS_TEST_DOCUMENT_ID)
+#    #assert BaseModel.ss.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
+#    #assert Book.ss.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
+#
+#    # setup / remove any records that may exist:
+#    Book.destroy_all()
+#
+#    # seed default records:
+#    Book.seed()
+#
+#    yield "Using test document!"
+#
+#    # clean up:
+#    Book.destroy_all()
 
 
 

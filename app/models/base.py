@@ -68,6 +68,9 @@ class BaseModel:
 
 
 
+    @classmethod
+    def set_document_id(cls, document_id):
+        cls.ss.document_id = document_id
 
     @classmethod
     def get_sheet(cls):
@@ -76,17 +79,31 @@ class BaseModel:
        return cls.ss.get_sheet(sheet_name=cls.SHEET_NAME)
 
     @classmethod
-    def find_all(cls, sheet=None):
-        #sheet = cls.ss.find_or_create_sheet(sheet_name=cls.SHEET_NAME)
-        #sheet = cls.ss.get_sheet(sheet_name=cls.SHEET_NAME) # assumes sheet exists, with the proper headers!
+    def find(cls, by_id, sheet=None):
+        """Fetches a record by its unique identifier."""
         sheet = sheet or cls.get_sheet() # assumes sheet exists, with the proper headers!
-        #return sheet.get_all_records()
+        records = sheet.get_all_records()
+        for record in records:
+            if record.get("id") == by_id:
+                return cls(record)
+        return None
+
+    @classmethod
+    def find_all(cls, sheet=None):
+        """Fetches all records from a given sheet."""
+        sheet = sheet or cls.get_sheet() # assumes sheet exists, with the proper headers!
         records = sheet.get_all_records()
         return [cls(record) for record in records]
 
+    @classmethod
+    def destroy_all(cls, sheet=None):
+        """Removes all records from a given sheet, except the header row."""
+        sheet = sheet or cls.get_sheet()
+        records = sheet.get_all_records()
+        # start on the second row, and delete one more than the number of records (to account for header row)
+        return sheet.delete_rows(start_index=2, end_index=len(records)+1)
 
     @classmethod
-    #def filter_by(cls, sheet=None, **kwargs):
     def filter_by(cls, **kwargs):
         #sheet = sheet or cls.get_sheet() # assumes sheet exists, with the proper headers!
         sheet = cls.get_sheet()
