@@ -7,7 +7,7 @@ from flask import Flask
 from authlib.integrations.flask_client import OAuth
 
 from app import APP_ENV, APP_VERSION
-from app.spreadsheet_service import SpreadsheetService
+#from app.spreadsheet_service import SpreadsheetService
 
 from web_app.routes.home_routes import home_routes
 from web_app.routes.auth_routes import auth_routes
@@ -38,10 +38,7 @@ GA_TRACKER_ID = os.getenv("GA_TRACKER_ID", default="G-OOPS")
 
 
 
-def create_app(spreadsheet_service=None):
-
-    if not spreadsheet_service:
-        spreadsheet_service = SpreadsheetService()
+def create_app():
 
     #
     # INIT
@@ -65,7 +62,6 @@ def create_app(spreadsheet_service=None):
 
     # for client-side google analytics:
     app.config["GA_TRACKER_ID"] = GA_TRACKER_ID
-    #app.config["GA_DOMAIN"] = GA_DOMAIN
 
     # set timezone to mimic production mode when running locally:
     os.environ["TZ"] = "UTC"
@@ -89,7 +85,7 @@ def create_app(spreadsheet_service=None):
     # SERVICES
     #
 
-    app.config["SPREADSHEET_SERVICE"] = spreadsheet_service
+    #app.config["SPREADSHEET_SERVICE"] = spreadsheet_service
 
     #
     # ROUTES

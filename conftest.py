@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from app.spreadsheet_service import SpreadsheetService
 from app.models.base import BaseModel
 from app.models.book import Book
+from app.models.product import Product
 
 from web_app import create_app
 
@@ -60,7 +61,29 @@ def model_context():
 
 
 @pytest.fixture()
-def test_client(ss):
-    app = create_app(spreadsheet_service=ss)
+def products_context(model_context):
+
+    # setup / remove any records that may exist:
+    Product.destroy_all()
+
+    # seed default records:
+    Product.seed()
+
+    yield "Using test document!"
+
+    # clean up:
+    Product.destroy_all()
+
+
+
+#@pytest.fixture()
+#def test_client(ss):
+#    app = create_app(spreadsheet_service=ss)
+#    app.config.update({"TESTING": True})
+#    return app.test_client()
+
+@pytest.fixture()
+def test_client(model_context):
+    app = create_app()
     app.config.update({"TESTING": True})
     return app.test_client()
