@@ -84,8 +84,32 @@ class BaseModel:
         records = sheet.get_all_records()
         return [cls(record) for record in records]
 
+
     @classmethod
-    def create_records(cls, new_records, records=[]):
+    #def filter_by(cls, sheet=None, **kwargs):
+    def filter_by(cls, **kwargs):
+        #sheet = sheet or cls.get_sheet() # assumes sheet exists, with the proper headers!
+        sheet = cls.get_sheet()
+        records = sheet.get_all_records()
+        objs = []
+        for attrs in records:
+            obj = cls(attrs)
+
+            #for k,v in kwargs.items():
+            #    if getattr(obj, k) == v:
+            #        objs.append(obj)
+
+            #match_all_conditions = all(dict(obj).get(k) == v for k, v in kwargs.items())
+            match_all = all(getattr(obj, k) == v for k, v in kwargs.items())
+
+            if match_all:
+                objs.append(obj)
+
+        return objs
+
+
+    @classmethod
+    def create_records(cls, new_records:List[Dict], records=[]):
         """Appends new records (list of dictionaries) to the sheet.
             Adds auto-incrementing unique identifiers, and timestamp columns.
         """
@@ -119,6 +143,18 @@ class BaseModel:
     def seed_records(cls):
         return cls.create_records(new_records=cls.SEEDS)
 
+    @classmethod
+    def create(cls, new_record:dict):
+        """Appends new records (list of dictionaries) to the sheet.
+            Adds auto-incrementing unique identifiers, and timestamp columns.
+        """
+        return cls.create_records([new_record])
 
-    #def save(self):
-    #    print("SAVING RECORD TO SHEET: ____")
+    def save(self):
+        print("SAVING RECORD TO SHEET:")
+        #if self.id:
+        #    self.attrs["updated_at"] = self.ss.generate_timestamp()
+        #    self.update(dict(self))
+        print(dict(self))
+        #self.cls.create_records([dict(self)])
+        return self.create(dict(self))

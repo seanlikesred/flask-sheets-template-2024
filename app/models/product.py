@@ -58,4 +58,13 @@ if __name__ == "__main__":
             Product.seed_records()
 
     #breakpoint()
-    Product.seed_records()
+    #Product.seed_records()
+
+    results = Product.filter_by(name="Strawberries")
+    print(len(results))
+
+    results = Product.filter_by(name="Strawberries", price=1000)
+    print(len(results))
+
+    product = Product(dict(name="Blueberries", price=3.99, description="organic blues", url="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
+    product.save()

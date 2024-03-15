@@ -65,6 +65,11 @@ GOOGLE_SHEETS_DOCUMENT_ID="____________"
 # GOOGLE ANALYTICS
 #
 GA_TRACKER_ID="UA-XXXXXXX-1"
+
+#
+# FRONT END CUSTOMIZATIONS
+#
+
 ```
 
 
@@ -80,16 +85,14 @@ Interfacing with the Google Sheets database:
 python -m app.spreadsheet_service
 ```
 
-### Migrations
+### Sheets Database
 
-Populating the Google Sheets database with example records (i.e. "seeds"):
+Fetch records from Google Sheets database, and populate with example records (i.e. "seeds"):
 
 ```sh
 python -m app.models.product
 
 python -m app.models.order
-
-python -m app.models.team
 ```
 
 
