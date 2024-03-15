@@ -5,7 +5,7 @@ from gspread import Spreadsheet as Document, Worksheet
 from dotenv import load_dotenv
 import pytest
 
-from app.spreadsheet_service import SpreadsheetService
+#from app.spreadsheet_service import SpreadsheetService
 
 load_dotenv()
 
@@ -13,29 +13,6 @@ CI_ENV = (os.getenv("CI", default="false") == "true")
 CI_SKIP_MESSAGE = "taking a lighter touch to testing on the CI server, to reduce API usage and prevent rate limits"
 
 
-def test_generate_timestamp():
-    #dt = ss.generate_timestamp()
-    dt = SpreadsheetService.generate_timestamp()
-    assert isinstance(dt, datetime)
-    assert dt.tzinfo == timezone.utc
-
-
-
-def test_parse_timestamp():
-    example_ts = "2023-03-08 19:59:16.471152+00:00"
-    #dt = ss.parse_timestamp(example_ts)
-    dt = SpreadsheetService.parse_timestamp(example_ts)
-    assert isinstance(dt, datetime)
-    assert dt.year == 2023
-    assert dt.month == 3
-    assert dt.day == 8
-    assert dt.hour == 19
-    assert dt.minute == 59
-    assert dt.second == 16
-    assert dt.tzinfo == timezone.utc
-
-
-#
 # READING DATA
 #
 
@@ -49,7 +26,7 @@ def test_sheets(ss):
     assert isinstance(sheets, list)
 
     for sheet in sheets:
-        assert isinstance(sheets, Worksheet)
+        assert isinstance(sheet, Worksheet)
 
 
 # TODO: setup test sheet

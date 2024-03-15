@@ -1,6 +1,7 @@
 
 
-# tests for each page:
+# tests for each page
+# ... update the tests if you change the page contents:
 
 def test_home(test_client):
     response = test_client.get("/")

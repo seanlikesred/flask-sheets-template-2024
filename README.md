@@ -105,7 +105,12 @@ Run the local web server (then visit localhost:5000 in a browser):
 FLASK_APP=web_app flask run
 ```
 
+
+
+
 ## Testing
+
+Setup a separate Google Sheet to use as the test document. Note its identifier and set environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID` accordingly, via the ".env" file.
 
 Run tests:
 
@@ -119,6 +124,12 @@ pytest
 ## CI
 
 See more information about the [CI](/admin/GITHUB_ACTIONS.md) build process.
+
+Running tests in CI mode:
+
+```sh
+CI=true pytest
+```
 
 ## Deploying
 

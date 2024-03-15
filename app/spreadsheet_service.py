@@ -45,7 +45,7 @@ class SpreadsheetService(DateParser):
     @property
     def sheets(self) -> List[Worksheet]:
         """List all sheets in the given document."""
-        return ss.doc.worksheets()
+        return self.doc.worksheets()
 
     def get_sheet(self, sheet_name) -> Worksheet:
         """Get a specific sheet in the document."""
