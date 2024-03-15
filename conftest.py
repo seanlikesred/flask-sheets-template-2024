@@ -60,19 +60,19 @@ def model_context():
 
 
 
-@pytest.fixture()
-def products_context(model_context):
-
-    # setup / remove any records that may exist:
-    Product.destroy_all()
-
-    # seed default records:
-    Product.seed()
-
-    yield "Using test document!"
-
-    # clean up:
-    Product.destroy_all()
+#@pytest.fixture()
+#def products_context(model_context):
+#
+#    # setup / remove any records that may exist:
+#    Product.destroy_all()
+#
+#    # seed default records:
+#    Product.seed()
+#
+#    yield "Using test document!"
+#
+#    # clean up:
+#    Product.destroy_all()
 
 
 
