@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Flask Sheets Template 2024 | Customize this title in the boostrap layout</title>
+    <!-- PAGE TITLE (CAN BE CUSTOMIZED BY CHILD PAGES) -->
+    {% set default_title = "My App | Made with the Flask Sheets Template 2024" -%}
+    {% set page_title = page_title|default(default_title) -%}
+    <title>{{page_title}}</title>
 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
@@ -177,8 +180,8 @@
                     <p class="small">
                         &copy; Copyright 2024 Your Name Here
                     </p>
-                    <p class="small">
-                        Made with the <a href="https://github.com/prof-rossetti/flask-sheets-template-2024">Flask Google Sheets Template</a>
+                    <p class="small white-space: nowrap;">
+                        Made with the <a href="https://github.com/prof-rossetti/flask-sheets-template-2024">Flask Sheets Template 2024</a>
                     </p>
                 </div>
             </div>
