@@ -2,7 +2,7 @@
 from flask import session, flash, redirect, current_app
 from flask import Blueprint, session, redirect, url_for, render_template #request, , , jsonify
 
-from app.models.login import Login
+#from app.models.login import Login
 
 auth_routes = Blueprint("auth_routes", __name__)
 
