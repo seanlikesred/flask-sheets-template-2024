@@ -24,13 +24,14 @@ def test_products_page(test_client):
     products = Product.find_all()
     assert len(products) == 3
 
-    assert len(Product.find_all())
+    # given certain products in the database,
+    # we expect to see corresponding information on the page:
     response = test_client.get("/products")
     assert response.status_code == 200
     assert b"<h1>Products</h1>" in response.data
-
     assert b"Textbook" in response.data
     assert b"Cup of Tea" in response.data
     assert b"Strawberries" in response.data
 
+    # clean up (clear products sheet):
     Product.destroy_all()

@@ -1,5 +1,5 @@
 
-from app.models.base import BaseModel
+from app.db import BaseModel
 
 class Book(BaseModel):
 
@@ -21,3 +21,14 @@ class Book(BaseModel):
         {"title": "Harry Potter and the Philosopher's Stone", "author": "J.K. Rowling", "year": 1997},
         {"title": "Harry Potter and the Chamber of Secrets", "author": "J.K. Rowling", "year": 1998},
     ]
+
+
+if __name__ == "__main__":
+
+    books = Book.all()
+    print("FOUND", len(books), "BOOKS")
+    if any(books):
+        for book in books:
+            print(book.title, book.author, book.year)
+    else:
+        Book.seed()

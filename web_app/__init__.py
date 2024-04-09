@@ -8,6 +8,7 @@ from authlib.integrations.flask_client import OAuth
 
 from app import APP_ENV, APP_VERSION
 #from app.spreadsheet_service import SpreadsheetService
+#from app.db import BaseModel
 
 from web_app.routes.home_routes import home_routes
 from web_app.routes.auth_routes import auth_routes
@@ -37,14 +38,11 @@ def create_app():
 
     # for flask flash messaging:
     app.config["SECRET_KEY"] = SECRET_KEY
-
     # for front-end debugging (maybe doesn't belong here but its ok):
     app.config["APP_ENV"] = APP_ENV
     app.config["APP_VERSION"] = APP_VERSION
-
     # for client-side google analytics:
     app.config["GA_TRACKER_ID"] = GA_TRACKER_ID
-
     # set timezone to mimic production mode when running locally:
     os.environ["TZ"] = "UTC"
 
@@ -62,12 +60,6 @@ def create_app():
         #authorize_params={"access_type": "offline"} # give us the refresh token! see: https://stackoverflow.com/questions/62293888/obtaining-and-storing-refresh-token-using-authlib-with-flask
     )
     app.config["OAUTH"] = oauth
-
-    #
-    # SERVICES
-    #
-
-    #app.config["SPREADSHEET_SERVICE"] = spreadsheet_service
 
     #
     # ROUTES

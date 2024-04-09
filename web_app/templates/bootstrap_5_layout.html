@@ -112,7 +112,7 @@
                 <!--
                     NAV TITLE
                 -->
-                Flask Sheets Template 2024
+                My App
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,8 +138,7 @@
                     {% endfor %}
 
                     <a href="/user/profile" style="padding:5px">
-                        {% set profile_image_url = session['current_user']['picture'] or 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' %}
-                        <img class="rounded-circle" src="{{ profile_image_url }}" alt="profile photo" height="32px" width="32px">
+                        <img class="rounded-circle" src="{{ session['current_user']['picture'] or 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png' }}" alt="profile photo" height="32px" width="32px">
                     </a>
                 {% else %}
                     <!--

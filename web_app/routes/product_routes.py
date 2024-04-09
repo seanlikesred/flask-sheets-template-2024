@@ -6,7 +6,5 @@ product_routes = Blueprint("product_routes", __name__)
 
 @product_routes.route("/products")
 def products():
-    #service = current_app.config["SPREADSHEET_SERVICE"]
-    #products = service.get_products()
-    products = Product.find_all()
+    products = Product.all()
     return render_template("products.html", products=products)

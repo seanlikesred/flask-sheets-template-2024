@@ -15,9 +15,7 @@ order_routes = Blueprint("order_routes", __name__)
 def orders():
     print("USER ORDERS...")
     current_user = session.get("current_user")
-    #service = current_app.config["SPREADSHEET_SERVICE"]
-    #orders = service.get_user_orders(current_user["email"])
-    orders = Order.filter_by(user_email=current_user["email"])
+    orders = Order.where(user_email=current_user["email"])
     return render_template("user_orders.html", orders=orders)
 
 

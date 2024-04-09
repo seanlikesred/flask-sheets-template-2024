@@ -110,7 +110,7 @@ FLASK_APP=web_app flask run
 
 ## Testing
 
-Setup a separate Google Sheet to use as the test document. Note its identifier and set environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID` accordingly, via the ".env" file. Setup the sheets in the same way you would set up the normal google sheet database. Also setup a "books" sheet with columns "id", "title", "author", "year", "created_at", and "updated_at".
+Setup a separate Google Sheet to use as the test document. Note its identifier and set environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID` accordingly, via the ".env" file. Setup the sheets in the same way you would set up the normal google sheet database. Also setup a "books" sheet with columns "id", "title", "author", "year", and "created_at".
 
 Run tests:
 

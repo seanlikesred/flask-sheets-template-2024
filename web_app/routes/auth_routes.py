@@ -29,23 +29,22 @@ def google_oauth_callback():
         print("STORING USER INFO IN THE SESSION...")
         #print(user_info)
         #> {
-        #>     'iss': 'https://accounts.google.com',
-        #>     'azp': '__________.apps.googleusercontent.com',
-        #>     'aud': '__________.apps.googleusercontent.com',
-        #>     'sub': '__________',
-        #>     'email': 'example@gmail.com',
+        #>     'at_hash': '______',
+        #>     'aud': '______.apps.googleusercontent.com',
+        #>     'azp': '______.apps.googleusercontent.com',
+        #>     'email': '______@gmail.com',
         #>     'email_verified': True,
-        #>     'at_hash': '__________',
-        #>     'nonce': '__________',
-        #>     'name': 'First M Last',
-        #>     'picture': 'https://lh3.googleusercontent.com/a-/__________',
-        #>     'given_name': 'First M',
-        #>     'family_name': 'Last',
-        #>     'locale': 'en',
-        #>     'iat': __________,
-        #>     'exp': __________
+        #>     'exp': 1712683963,
+        #>     'family_name': 'Student',
+        #>     'given_name': 'Sally',
+        #>     'iat': 1712680363,
+        #>     'iss': 'https://accounts.google.com',
+        #>     'name': 'Sally Student',
+        #>     'nonce': '______',
+        #>     'picture': 'https://lh3.googleusercontent.com/a/______',
+        #>     'sub': '______'
         #> }
-        print("USER INFO:", user_info["email"], user_info["name"], user_info["locale"])
+        print("USER INFO:", user_info["email"], user_info["name"])
 
         # add user info to the session
         session["current_user"] = user_info
