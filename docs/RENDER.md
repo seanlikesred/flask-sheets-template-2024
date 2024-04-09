@@ -24,15 +24,16 @@ Set environment variables:
 ```sh
 GOOGLE_CLIENT_ID="______.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET="______"
-GOOGLE_CREDENTIALS_FILEPATH="/etc/secrets/google-credentials.json"
 GOOGLE_SHEETS_DOCUMENT_ID="___________"
+# production server specific variables:
+GOOGLE_CREDENTIALS_FILEPATH="/etc/secrets/google-credentials.json"
 SECRET_KEY="YOUR SECRET HERE"
 ```
 
-Set a [secret configuration file](https://community.render.com/t/using-google-application-credentials-json/6885) called "google-credentials.json", and paste the contents from your google service account credentials file. The render web service will then have access to the file as "/etc/secrets/google-credentials.json".
+Also set a [secret configuration file](https://community.render.com/t/using-google-application-credentials-json/6885) called "google-credentials.json", and paste the contents from your google service account credentials file. The render web service will then have access to the file as "/etc/secrets/google-credentials.json" (as designated by the `GOOGLE_CREDENTIALS_FILEPATH` environment variable).
 
 
-# Google Cloud Setup
+# Google Cloud Setup, Revisited
 
 Under [credentials](https://console.cloud.google.com/apis/credentials/) for your web client, configure a redirect url pointing to the render server: "https://YOUR_RENDER_APP.onrender.com/auth/google/callback" and save.
 
