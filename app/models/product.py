@@ -1,7 +1,6 @@
-
-from app.models.base import BaseModel
 from pprint import pprint
 
+from app.db import BaseModel
 
 class Product(BaseModel):
 
@@ -30,41 +29,44 @@ class Product(BaseModel):
         }
     ]
 
-    #def __init__(self, attrs):
-    #    super().__init__(attrs=attrs)
-    #
-    #    self.name = attrs.get("name")
-    #    self.description = attrs.get("description")
-    #    self.price = attrs.get("price")
-    #    self.url = attrs.get("url")
-
-    #@property
-    #def row(self):
-    #    return [self.id, self.name, self.description, self.price, self.url, str(self.created_at), str(self.updated_at)]
 
 
 
 if __name__ == "__main__":
 
-    products = Product.find_all()
-
+    print("------------")
+    print("EXISTING RECORDS:")
+    products = Product.all()
+    print("FOUND", len(products), "PRODUCTS:")
     if any(products):
         for product in products:
             #breakpoint()
             pprint(dict(product))
     else:
-        will_seed = input("Seed products? (y/n)? ").upper()
-        if will_seed == "Y":
-            Product.seed_records()
+        #if input("Seed products? (Y/N)? ").upper() == "Y":
+        #    print("SEEDING RECORDS...")
+        #    Product.seed()
+        print("SEEDING RECORDS...")
+        Product.seed()
 
-    #breakpoint()
-    #Product.seed_records()
+    print("------------")
+    print("FIND RECORD GIVEN ITS IDENTIFIER...")
+    product = Product.find(1)
+    print(product.name)
 
-    results = Product.filter_by(name="Strawberries")
-    print(len(results))
+    print("------------")
+    print("FILTERING RECORDS...")
+    matches = Product.where(name="Strawberries")
+    print(len(matches))
+    product = matches[0]
+    print(product.name)
 
-    results = Product.filter_by(name="Strawberries", price=1000)
-    print(len(results))
-
-    product = Product(dict(name="Blueberries", price=3.99, description="organic blues", url="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"))
-    product.save()
+    print("------------")
+    print("CREATING NEW PRODUCT...")
+    params = {
+        "name": "Blueberries",
+        "price":3.99,
+        "description":"organic blues",
+        "url": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+    Product.create(params)

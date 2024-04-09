@@ -15,9 +15,9 @@ order_routes = Blueprint("order_routes", __name__)
 def orders():
     print("USER ORDERS...")
     current_user = session.get("current_user")
-    #service = current_app.config["SPREADSHEET_SERVICE"]
-    #orders = service.get_user_orders(current_user["email"])
-    orders = Order.filter_by(user_email=current_user["email"])
+    orders = Order.where(user_email=current_user["email"])
+    # sort descending on the basis of creation date:
+    orders = sorted(orders, key=lambda order: order.created_at, reverse=True)
     return render_template("user_orders.html", orders=orders)
 
 
@@ -35,15 +35,18 @@ def create_order():
     current_user = session.get("current_user")
     user_email = current_user["email"]
 
-    #service = current_app.config["SPREADSHEET_SERVICE"]
     try:
-        order = Order({
+        params = {
             "user_email": user_email,
             "product_id": int(product_id),
             "product_name": product_name,
             "product_price": float(product_price)
-        })
-        order.save()
+        }
+        #order = Order(params)
+        #order.save()
+        # alternatively:
+        Order.create(params)
+
         flash(f"Order received!", "success")
         return redirect("/user/orders")
     except Exception as err:

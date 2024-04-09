@@ -1,8 +1,6 @@
-
-
-from app.models.base import BaseModel
 from pprint import pprint
 
+from app.db import BaseModel
 
 class Order(BaseModel):
 
@@ -15,8 +13,7 @@ class Order(BaseModel):
 
 if __name__ == "__main__":
 
-    orders = Order.find_all()
-
-    if any(orders):
-        for order in orders:
-            pprint(dict(order))
+    orders = Order.all()
+    print("FOUND", len(orders), "ORDERS")
+    for order in orders:
+        pprint(dict(order))
