@@ -2,7 +2,7 @@
 
 A web application starter template, created in Python with the Flask framework. Allows users to login with their Google accounts (via OAuth). Interfaces with a Google Sheets database.
 
-![](https://user-images.githubusercontent.com/1328807/160312385-7ffbbada-4363-4b48-873d-9eca868afef0.png)
+![](./docs/images/products-page-screenshot.png)
 
 ## Prerequisites
 
@@ -32,44 +32,35 @@ pip install -r requirements.txt
 
 ## Services Setup
 
-This app requires a few services, for user authentication and data storage. Follow the instructions below to setup these services.
+This app requires a few services, for user authentication and data storage. Follow the instructions below to setup these services:
 
-1. Follow the [Google Cloud Setup](/admin/GOOGLE_CLOUD.md) guide to configure a Google Cloud project to facilitate user logins and programmatic access to Google APIs. Obtain and configure client credentials (via environment variables) and service account credentials (via JSON file).
+1. Follow the [Google Cloud Setup](./docs/GOOGLE_CLOUD.md) guide to configure a Google Cloud project to facilitate user logins and programmatic access to Google APIs. Obtain and configure client credentials (via environment variables) and service account credentials (via JSON file).
 
-2. Follow the [Google Sheets Database Setup](/admin/GOOGLE_SHEETS.md) guide to setup the google sheets database.
+2. Follow the [Google Sheets Database Setup](./docs/GOOGLE_SHEETS.md) guide to setup the google sheets database.
 
-3. If you would like to configure Google Analytics, optionally consult the [Google Analytics Setup](/admin/GOOGLE_ANALYTICS.md) guide.
+3. If you would like to configure Google Analytics, optionally consult the [Google Analytics Setup](./docs/GOOGLE_ANALYTICS.md) guide.
 
 
 ## Configuration
 
 ### Environment Variables
 
-Create a file called ".env" in the root directory of this repository, and populate it with environment variables to specify your own credentials, as obtained in the "Setup" section above:
+We will use environment variables to pass secret credentials to the app in a secure, indirect way.
+
+Create a file called ".env" in the root directory of this repository, and add contents like the following (specifying your own credentials, as obtained during the "Setup" section):
 
 ```sh
 FLASK_APP="web_app"
 
-#
-# GOOGLE OAUTH
-#
+# GOOGLE OAUTH LOGIN
 GOOGLE_CLIENT_ID="____________"
 GOOGLE_CLIENT_SECRET="____________"
 
-#
 # GOOGLE SHEETS DATABASE
-#
 GOOGLE_SHEETS_DOCUMENT_ID="____________"
 
-#
 # GOOGLE ANALYTICS
-#
-GA_TRACKER_ID="UA-XXXXXXX-1"
-
-#
-# FRONT END CUSTOMIZATIONS
-#
-
+GA_TRACKER_ID="____________"
 ```
 
 
@@ -77,29 +68,26 @@ GA_TRACKER_ID="UA-XXXXXXX-1"
 
 ## Usage
 
-### Sheets Service
+### Sheets Database
 
-Interfacing with the Google Sheets database:
+After you have set up the Google Sheets database, you should be able to use the spreadsheet service to interface with it at a low level (for example to list all the sheets in the document):
 
 ```sh
 python -m app.spreadsheet_service
 ```
 
-### Sheets Database
-
-Fetch records from Google Sheets database, and populate with example records (i.e. "seeds"):
+Assuming the "products" sheet has been setup properly, you can use the model class to interface with it at a higher level (for example to populate the sheet with example records):
 
 ```sh
 python -m app.models.product
-
-python -m app.models.order
 ```
 
+> NOTE: see the contents of the ["app/models/product.py"](/app/models/product.py) file for more details, and feel free to customize as desired.
 
 
 ### Web Application
 
-Run the local web server (then visit localhost:5000 in a browser):
+Run the local web server (then visit http://localhost:5000 in a browser):
 
 ```sh
 FLASK_APP=web_app flask run
@@ -110,20 +98,24 @@ FLASK_APP=web_app flask run
 
 ## Testing
 
-Setup a separate Google Sheet to use as the test document. Note its identifier and set environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID` accordingly, via the ".env" file. Setup the sheets in the same way you would set up the normal google sheet database. Also setup a "books" sheet with columns "id", "title", "author", "year", and "created_at".
+We will use a separate Google Sheet "test document" to use during testing. This keeps development data seprate from test data, and allows for experimentation when testing. To setup the test document:
+  1. Create a new Google Sheet document, and note its identifier.
+  2. Set this test document identifier as the environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID`, via the ".env" file.
+  3. Inside the test document, set up all the normal sheets that the app uses (products, orders, etc.).
 
-Run tests:
+Running tests:
 
 ```sh
 pytest
 ```
 
-> NOTE: we are using a live sheet for testing, so to avoid API rate limits, we are waiting / sleeping between each test, which makes the tests a bit slow for now
+> NOTE: we are using a live sheet for testing, so to avoid API rate limits, we are waiting / sleeping between each test, which makes the tests a bit slow.
 
+> NOTE: the "web_app_test" expects certain content on certain pages, so if / when you update the page contents, you will need to update the tests as well.
 
-## CI
+## Continuous Integration
 
-See more information about the [CI](/admin/GITHUB_ACTIONS.md) build process.
+See the [GitHub Actions Guide](/docs/GITHUB_ACTIONS.md) for more information about configuring the Continuous Integration (CI) build process.
 
 Running tests in CI mode:
 
@@ -131,9 +123,9 @@ Running tests in CI mode:
 CI=true pytest
 ```
 
-## Deploying
+## Deploying / Hosting
 
-See the [Deployer's Guide](/admin/RENDER.md) for instructions on deploying to a production server hosted by Render.
+See the [Hosting Guide](/docs/RENDER.md) for instructions on deploying to a production server hosted by Render.
 
 
 

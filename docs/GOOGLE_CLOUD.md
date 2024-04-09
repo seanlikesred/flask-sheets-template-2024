@@ -19,7 +19,7 @@ Return to the Credentials page and actually creating the "OAuth Client Id". Choo
   + http://localhost:5000/auth/google/callback
   + http://127.0.0.1:5000/auth/google/callback
 
-After the client is created, note the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and set them as environment variables (see configuration section below).
+After the client is created, note the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and set them as environment variables (see "Configuration" section in the README).
 
 ### Service Account Credentials
 
