@@ -5,42 +5,47 @@ from time import sleep
 
 from dotenv import load_dotenv
 
-from app.spreadsheet_service import SpreadsheetService
-from web_app import create_app
+from gspread_models.service import SpreadsheetService
+from gspread_models.base import BaseModel
 
+from app.db import GOOGLE_CREDENTIALS_FILEPATH
+
+from web_app import create_app
 
 load_dotenv()
 
 # an example sheet that is being used for testing purposes:
-GOOGLE_SHEETS_TEST_DOCUMENT_ID= os.getenv("GOOGLE_SHEETS_TEST_DOCUMENT_ID", default="1TZCr9x6CZmlccSKgpOkAIE6dCfRmS_83tSlb_GyALsw")
-TEST_SLEEP = int(os.getenv("TEST_SLEEP", default="10"))
+GOOGLE_SHEETS_TEST_DOCUMENT_ID= os.getenv("GOOGLE_SHEETS_TEST_DOCUMENT_ID")
+TEST_SLEEP = int(os.getenv("TEST_SLEEP", default="3"))
 
-# it would be nice to reset the database for each test, but we are hitting rate limits
-# we could consider using a single instance of the test database, but maybe that's worse than sleeping after each test?
-@pytest.fixture() # scope="module"
-def ss():
-    """spreadsheet service to use when testing"""
-    ss = SpreadsheetService(document_id=GOOGLE_SHEETS_TEST_DOCUMENT_ID)
-
-    # setup / remove any records that may exist:
-    ss.destroy_all("products")
-    ss.destroy_all("orders")
-
-    # seed default products:
-    ss.seed_products()
+@pytest.fixture()
+def service():
+    """Spreadsheet service connected to the test document. Sleeps to avoid rate limits."""
+    ss = SpreadsheetService(
+        credentials_filepath=GOOGLE_CREDENTIALS_FILEPATH,
+        document_id=GOOGLE_SHEETS_TEST_DOCUMENT_ID
+    )
+    assert ss.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
 
     yield ss
 
-    # clean up:
-    #ss.destroy_all("products")
-    #ss.destroy_all("orders")
     print("SLEEPING...")
     sleep(TEST_SLEEP)
 
 
+@pytest.fixture()
+def model_context(service):
+    """Use this fixture and subsequent model calls will be made against the test database."""
+    BaseModel.service = service
+    assert BaseModel.service.document_id == GOOGLE_SHEETS_TEST_DOCUMENT_ID
+
+    yield "Using test document!"
 
 @pytest.fixture()
-def test_client(ss):
-    app = create_app(spreadsheet_service=ss)
+def test_client(model_context):
+    """Test client for the flask web application.
+        Uses the model context and therefore runs against the test database.
+    """
+    app = create_app()
     app.config.update({"TESTING": True})
     return app.test_client()

@@ -2,21 +2,14 @@
 from flask import session, flash, redirect, current_app
 from flask import Blueprint, session, redirect, url_for, render_template #request, , , jsonify
 
-auth_routes = Blueprint("auth_routes", __name__)
+#from app.models.login import Login
 
-# signup route only for email password auth (not implemented)
-#@auth_routes.route("/signup")
-#def signup():
-#    print("SIGNUP...")
-#    return render_template("signup.html")
+auth_routes = Blueprint("auth_routes", __name__)
 
 @auth_routes.route("/login")
 def login():
     print("LOGIN...")
-    # this is a login page for either google or email/password auth (but the latter not implemented at the moment):
     return render_template("login.html")
-    # if not using email/password auth, consider shortcut directly to google login:
-    #return redirect("/auth/google/login")
 
 @auth_routes.route("/auth/google/login")
 def google_login():
@@ -35,36 +28,33 @@ def google_oauth_callback():
         print("STORING USER INFO IN THE SESSION...")
         #print(user_info)
         #> {
-        #>     'iss': 'https://accounts.google.com',
-        #>     'azp': '__________.apps.googleusercontent.com',
-        #>     'aud': '__________.apps.googleusercontent.com',
-        #>     'sub': '__________',
-        #>     'email': 'example@gmail.com',
+        #>     'at_hash': '______',
+        #>     'aud': '______.apps.googleusercontent.com',
+        #>     'azp': '______.apps.googleusercontent.com',
+        #>     'email': '______@gmail.com',
         #>     'email_verified': True,
-        #>     'at_hash': '__________',
-        #>     'nonce': '__________',
-        #>     'name': 'First M Last',
-        #>     'picture': 'https://lh3.googleusercontent.com/a-/__________',
-        #>     'given_name': 'First M',
-        #>     'family_name': 'Last',
-        #>     'locale': 'en',
-        #>     'iat': __________,
-        #>     'exp': __________
+        #>     'exp': 1712683963,
+        #>     'family_name': 'Student',
+        #>     'given_name': 'Sally',
+        #>     'iat': 1712680363,
+        #>     'iss': 'https://accounts.google.com',
+        #>     'name': 'Sally Student',
+        #>     'nonce': '______',
+        #>     'picture': 'https://lh3.googleusercontent.com/a/______',
+        #>     'sub': '______'
         #> }
-        print("USER INFO:", user_info["email"], user_info["name"], user_info["locale"])
+        print("USER INFO:", user_info["email"], user_info["name"])
 
-        # add user info to the session
+        # add user info to the session:
         session["current_user"] = user_info
 
-        # store the user info in the database:
-        #service = current_app.config["SPREADSHEET_SERVICE"]
-        #service.update_user({
+        # consider storing the user login info in the database:
+        #Login.create({
         #    "email": user_info["email"],
         #    "verified": user_info["email_verified"],
-        #    "given_name": user_info["given_name"],
-        #    "family_name": user_info["family_name"],
-        #    "picture": user_info["picture"],
-        #    "locale": user_info["locale"],
+        #    "first_name": user_info["given_name"],
+        #    "last_name": user_info["family_name"],
+        #    "profile_photo_url": user_info["picture"],
         #})
 
     else:
@@ -76,19 +66,3 @@ def logout():
     print("LOGGING OUT...")
     session.pop("current_user", None) # remove user info from the session
     return redirect("/")
-
-#
-# EMAIL / PASSWORD AUTH (NOT IMPLEMENTED)
-#
-
-#@auth_routes.route("/auth/email_password/signup")
-#def email_password_signup():
-#    return ...
-
-#@auth_routes.route("/auth/email_password/login")
-#def email_password_login():
-#    return ...
-
-#@auth_routes.route("/auth/email_password/reset_password3")
-#def email_password_reset():
-#    return ...
