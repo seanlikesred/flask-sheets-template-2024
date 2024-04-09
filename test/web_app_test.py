@@ -20,8 +20,9 @@ def test_about_page(test_client):
 def test_products_page(test_client):
     # setup (seed database with some products):
     Product.destroy_all()
-    Product.seed_records()
-    products = Product.find_all()
+    Product.seed()
+
+    products = Product.all()
     assert len(products) == 3
 
     # given certain products in the database,
