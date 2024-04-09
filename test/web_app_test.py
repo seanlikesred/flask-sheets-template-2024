@@ -1,8 +1,7 @@
 
 from app.models.product import Product
 
-# tests for each page
-# ... update the tests if you change the page contents:
+# tests for each page (update the tests if you change the page contents):
 
 
 def test_home_page(test_client):
