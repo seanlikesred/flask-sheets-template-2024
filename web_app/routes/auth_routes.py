@@ -2,15 +2,14 @@
 from flask import session, flash, redirect, current_app
 from flask import Blueprint, session, redirect, url_for, render_template #request, , , jsonify
 
+from app.models.login import Login
+
 auth_routes = Blueprint("auth_routes", __name__)
 
 @auth_routes.route("/login")
 def login():
     print("LOGIN...")
-    # this is a login page for either google or email/password auth (but the latter not implemented at the moment):
     return render_template("login.html")
-    # if not using email/password auth, consider shortcut directly to google login:
-    #return redirect("/auth/google/login")
 
 @auth_routes.route("/auth/google/login")
 def google_login():
@@ -46,18 +45,16 @@ def google_oauth_callback():
         #> }
         print("USER INFO:", user_info["email"], user_info["name"])
 
-        # add user info to the session
+        # add user info to the session:
         session["current_user"] = user_info
 
-        # store the user info in the database:
-        #service = current_app.config["SPREADSHEET_SERVICE"]
-        #service.update_user({
+        # consider storing the user login info in the database:
+        #Login.create({
         #    "email": user_info["email"],
         #    "verified": user_info["email_verified"],
-        #    "given_name": user_info["given_name"],
-        #    "family_name": user_info["family_name"],
-        #    "picture": user_info["picture"],
-        #    "locale": user_info["locale"],
+        #    "first_name": user_info["given_name"],
+        #    "last_name": user_info["family_name"],
+        #    "profile_photo_url": user_info["picture"],
         #})
 
     else:

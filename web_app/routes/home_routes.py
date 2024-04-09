@@ -1,5 +1,5 @@
 
-from flask import Blueprint, render_template, current_app #, session
+from flask import Blueprint, render_template #, current_app #, session
 
 home_routes = Blueprint("home_routes", __name__)
 
