@@ -11,13 +11,14 @@ This application requires a Python development environment with the following to
 - Git
 - Anaconda (includes Python and Pip)
 
-For beginners, here are some instructions for how to install Anaconda, and [set up your local Python development environment](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup) ("full setup").
+Beginners can consult the prof's [Python Development Environment Setup Guide](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup) ("Full Setup").
+
 
 ## Setup
 
 ### Repo Setup
 
-From the prof's template repository, click "Use this template" to create a new copy of this repository under your own control.
+From the prof's web application template repository on GitHub, click "Use this template" to create a new copy of this repository under your own control (first time only).
 
 Using GitHub Desktop or the command line, clone your copy of the repo to download it onto your local machine. Observe the location where you downloaded it (for example the Desktop).
 
@@ -74,7 +75,9 @@ Create a file called ".env" in the root directory of this repository, and add co
 ```sh
 FLASK_APP="web_app"
 
+#
 # GOOGLE OAUTH (see Google Cloud Setup Guide):
+#
 GOOGLE_CLIENT_ID="____________"
 GOOGLE_CLIENT_SECRET="____________"
 
