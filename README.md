@@ -114,24 +114,20 @@ FLASK_APP=web_app flask run
 
 ## Testing
 
-We will use a separate Google Sheet document to use during testing. This keeps development data seprate from test data, and allows for experimentation when testing.
+We will use a separate Google Sheet "test document" to use during testing. This keeps development data seprate from test data, and allows for experimentation when testing.
 
-To setup the test document, follow a modified version of the Google Sheets Database Setup:
-  1. Create a copy of the Google Sheet document you setup via the Google Sheets Database Setup (including the "products" and "orders" sheet with the proper column identifiers)
+To setup the test document, follow a modified version of the Google Sheets Database Setup Guide:
+  1. Create a copy of the Google Sheet "development document" you setup earlier (including the "products" and "orders" sheet with the proper column identifiers).
   2. Share this document with your service account's email address, giving it "Editor" priviges.
   3. Note the document's identifier from the URL bar, and set it as an environment variable called `GOOGLE_SHEETS_TEST_DOCUMENT_ID`, by adding this environment variable to the ".env" file.
 
-After the test document has been setup, you should be able to run tests.
-
-Running tests:
+After the test document has been setup, you should be able to run tests:
 
 ```sh
 pytest
 ```
 
-> NOTE: we are using a live sheet for testing, so to avoid API rate limits, we are waiting / sleeping between each test, which makes the tests a bit slow.
-
-> NOTE: the "web_app_test" expects certain content on certain pages, so if / when you update the page contents, you will need to update the tests as well.
+> NOTE: the "web_app_test" references specific content on certain pages, so as you update the page contents you may need to update the tests as well.
 
 ## Continuous Integration
 
