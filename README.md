@@ -11,11 +11,13 @@ This application requires a Python development environment with the following to
 - Git
 - Anaconda (includes Python and Pip)
 
-For beginners, here are some instructions for how to install Anaconda, and [set up your local Python development environment](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup).
+For beginners, here are some instructions for how to install Anaconda, and [set up your local Python development environment](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup) ("full setup").
 
-## Repo Setup
+## Setup
 
-To make a copy of the prof's template repository, click "Use this template" to create a new copy of this repository under your own control.
+### Repo Setup
+
+From the prof's template repository, click "Use this template" to create a new copy of this repository under your own control.
 
 Using GitHub Desktop or the command line, clone your copy of the repo to download it onto your local machine. Observe the location where you downloaded it (for example the Desktop).
 
@@ -25,23 +27,34 @@ Using GitHub Desktop or the command line, navigate to the local repo (for exampl
 cd ~/Desktop/flask-sheets-template-2024
 ```
 
+> NOTE: it is important to navigate to the root directory before running any of the commands below.
 
-## Anaconda Virtual Environment Setup
 
-Create a new virtual environment and activate it:
+### Anaconda Virtual Environment Setup
+
+Create new virtual environment (first time only):
 
 ```sh
 conda create -n flask-sheets-2024 python=3.10
+```
+
+Activate the virtual environment (first time, or whenever you return to the project):
+
+```sh
 conda activate flask-sheets-2024
 ```
 
-After navigating to the local repo and activating the environment, install the necessary python dependencies:
+> NOTE: it is important to activate the virual environment before running any of the commands below.
+
+Install package dependencies (first time only):
 
 ```sh
 pip install -r requirements.txt
 ```
 
-## Services Setup
+> NOTE: if you see an error after running this package installation command, make sure you have first navigated to the root directory of your local repository, where the "requirements.txt" file exists.
+
+### Services Setup
 
 This app requires a few services, for user authentication and data storage. Follow the instructions below to setup these services:
 
@@ -53,8 +66,6 @@ This app requires a few services, for user authentication and data storage. Foll
 
 
 ## Configuration
-
-### Environment Variables
 
 We will use environment variables to pass secret credentials to the app in a secure, indirect way.
 
@@ -84,7 +95,7 @@ GOOGLE_SHEETS_DOCUMENT_ID="____________"
 
 ## Usage
 
-### Sheets Database
+### Google Sheets Database
 
 After you have set up the Google Sheets database, you should be able to use the spreadsheet service to interface with it at a low level (for example to list all the sheets in the document):
 
@@ -116,6 +127,7 @@ Run the local web server (then visit http://localhost:5000 in a browser):
 FLASK_APP=web_app flask run
 ```
 
+> NOTE: if you run into issues seeting the site at the localhost:5000 address, try 127.0.0.1:5000 instead!
 
 
 
@@ -128,7 +140,7 @@ To setup the test document, follow a modified version of the Google Sheets Datab
   2. Share this document with your service account's email address, giving it "Editor" priviges.
   3. Note the document's identifier from the URL bar, and set it as an environment variable called `GOOGLE_SHEETS_TEST_DOCUMENT_ID`, by adding this environment variable to the ".env" file.
 
-After the test document has been setup, you should be able to run tests:
+Running tests, as configured by the "conftest.py" file and defined in the "test" directory:
 
 ```sh
 pytest
@@ -138,11 +150,11 @@ pytest
 
 ## Continuous Integration
 
-See the [GitHub Actions Guide](/docs/GITHUB_ACTIONS.md) for more information about configuring the Continuous Integration (CI) build process.
+See the [GitHub Actions Setup Guide](/docs/GITHUB_ACTIONS.md) for more information about configuring the Continuous Integration (CI) build process.
 
 ## Deploying / Hosting
 
-See the [Hosting Guide](/docs/RENDER.md) for instructions on deploying to a production server hosted by Render.
+See the [Deployment Guide](/docs/RENDER.md) for instructions on deploying to a production server hosted by Render.
 
 
 
