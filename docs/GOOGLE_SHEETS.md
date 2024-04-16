@@ -1,15 +1,15 @@
 
-## Google Sheets Database Setup
+## Google Sheets Database Setup Guide
 
 Ensure you have followed the [Google Cloud Setup](/docs/GOOGLE_CLOUD.md) guide, specifically that you have enabled the "Google Sheets API", and have downloaded the service account JSON file into the root directory of this repository and renamed it as "google-credentials.json".
 
 #### Document Setup
 
-Create a new Google Sheet document.
+Create a new Google Sheet document. Note the document identifier, and set it as the `GOOGLE_SHEETS_DOCUMENT_ID` environment variable via the ".env" file (see README). The document identifier is located between the "/d/" and "/edit", like: ".../d/DOCUMENT_ID/edit".
 
-The app will need read and write access to this document.
+![image of the url bar, with the document id highlighted](/docs/images/google-sheet-document-id.png)
 
-Modify the document's sharing settings to grant "Edit" privileges to the "client email" address specified in the Google API credentials JSON file (e.g. "my-serice@my-project.iam.gserviceaccount.com").
+The app will need read and write access to this document. Modify the document's sharing settings to grant "Edit" privileges to the "client email" address specified in the Google API service account credentials JSON file (e.g. "my-serice@my-project.iam.gserviceaccount.com").
 
 #### Sheets Setup
 
