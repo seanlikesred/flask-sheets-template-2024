@@ -1,10 +1,10 @@
-## Google Cloud Setup
+# Google Cloud Setup Guide
 
 We will use the Google Cloud platform for user login purposes, and to interface with Google Sheets and other Google services.
 
 After creating a project, we will configure an OAuth Client to handle user logins, and a Service Account to programmatically interface with Google Sheets and other services on our behalf.
 
-### Project Setup
+## Project Setup
 
 Visit the [Google Cloud Console](https://console.cloud.google.com). Create a new project, and name it.
 
@@ -14,7 +14,7 @@ After it is created, select it as necessary, for example using the project selec
 
 ![](/docs/images/google-cloud-project-select.png)
 
-### OAuth Client
+## OAuth Client
 
 Visit the [API Credentials](https://console.cloud.google.com/apis/credentials) page for your Google Cloud project. Click the button with the plus icon to "Create Credentials", and choose "Create OAuth Client Id". Before moving forward, we will be prompted to set up a consent screen.
 
@@ -30,11 +30,14 @@ Return to actually creating the "OAuth Client Id" from the Credentials page. Cho
 
 ![](/docs/images/oauth-client-redirect-uris.png)
 
+> FORESHADOWING: after you deploy the app to a hosted site, you will need to return here to configure an additional redirect URL pointing to your hosted site.
+
+
 After the OAuth Client is created, note the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and set them as environment variables via the ".env" file (see README)
 
 ![](/docs/images/oauth-client-secrets.png)
 
-### Service Account Credentials
+## Service Account Credentials
 
 To fetch data from the Google Sheets database (and use other Google APIs), the app will need access to a local "service account" credentials file.
 
@@ -46,7 +49,7 @@ Find the service account you just created in the "Service Accounts" section of t
 
 Then download the resulting JSON key file into the root directory of this repo, and rename it to "google-credentials.json".
 
-### Enabling APIs
+## Enabling APIs
 
 In the Google APIs project console, from the "Enabled APIs and Services" page, search for and enable the "Google Sheets API".
 
