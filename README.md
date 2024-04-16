@@ -6,25 +6,36 @@ A web application starter template, created in Python with the Flask framework. 
 
 ## Prerequisites
 
-This application requires a Python development environment:
+This application requires a Python development environment with the following tools installed:
 
-  + Git
-  + Anaconda, Python, Pip
+- Git
+- Anaconda (includes Python and Pip)
 
 For beginners, here are some instructions for how to install Anaconda, and [set up your local Python development environment](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup).
 
 ## Repo Setup
 
-Make a copy of this template repo (as necessary). Clone your copy of the repo onto your local machine. Navigate there from the command-line.
+To make a copy of the prof's template repository, click "Use this template" to create a new copy of this repository under your own control.
 
-Setup and activate a new Anaconda virtual environment:
+Using GitHub Desktop or the command line, clone your copy of the repo to download it onto your local machine. Observe the location where you downloaded it (for example the Desktop).
+
+Using GitHub Desktop or the command line, navigate to the local repo (for example if on the Desktop):
+
+```sh
+cd ~/Desktop/flask-sheets-template-2024
+```
+
+
+## Anaconda Virtual Environment Setup
+
+Create a new virtual environment and activate it:
 
 ```sh
 conda create -n flask-sheets-2024 python=3.10
 conda activate flask-sheets-2024
 ```
 
-Install package dependencies:
+After navigating to the local repo and activating the environment, install the necessary python dependencies:
 
 ```sh
 pip install -r requirements.txt
@@ -34,11 +45,11 @@ pip install -r requirements.txt
 
 This app requires a few services, for user authentication and data storage. Follow the instructions below to setup these services:
 
-1. Follow the [Google Cloud Setup](./docs/GOOGLE_CLOUD.md) guide to configure a Google Cloud project to facilitate user logins and programmatic access to Google APIs. Obtain and configure client credentials (via environment variables) and service account credentials (via JSON file).
+1. Follow the [Google Cloud Setup Guide](./docs/GOOGLE_CLOUD.md) to configure a Google Cloud project to facilitate user logins and programmatic access to Google APIs. Obtain and configure client credentials (via environment variables) and service account credentials (via JSON file).
 
-2. Follow the [Google Sheets Database Setup](./docs/GOOGLE_SHEETS.md) guide to setup the google sheets database.
+2. Follow the [Google Sheets Database Setup Guide](./docs/GOOGLE_SHEETS.md) to setup the Google Sheets database.
 
-3. If you would like to configure Google Analytics, optionally consult the [Google Analytics Setup](./docs/GOOGLE_ANALYTICS.md) guide.
+3. If you would like to configure Google Analytics, optionally consult the [Google Analytics Setup Guide](./docs/GOOGLE_ANALYTICS.md).
 
 
 ## Configuration
@@ -52,15 +63,20 @@ Create a file called ".env" in the root directory of this repository, and add co
 ```sh
 FLASK_APP="web_app"
 
-# GOOGLE OAUTH LOGIN
+# GOOGLE OAUTH (see Google Cloud Setup Guide):
 GOOGLE_CLIENT_ID="____________"
 GOOGLE_CLIENT_SECRET="____________"
 
-# GOOGLE SHEETS DATABASE
+#
+# GOOGLE SHEETS DATABASE (see Google Sheets Database Setup Guide)
+#
 GOOGLE_SHEETS_DOCUMENT_ID="____________"
+#GOOGLE_SHEETS_TEST_DOCUMENT_ID="____________"
 
-# GOOGLE ANALYTICS
-GA_TRACKER_ID="____________"
+#
+# GOOGLE ANALYTICS (see Google Analytics Setup Guide)
+#
+#GA_TRACKER_ID="____________"
 ```
 
 
@@ -98,10 +114,14 @@ FLASK_APP=web_app flask run
 
 ## Testing
 
-We will use a separate Google Sheet "test document" to use during testing. This keeps development data seprate from test data, and allows for experimentation when testing. To setup the test document:
-  1. Create a new Google Sheet document, and note its identifier.
-  2. Set this test document identifier as the environment variable `GOOGLE_SHEETS_TEST_DOCUMENT_ID`, via the ".env" file.
-  3. Inside the test document, set up all the normal sheets that the app uses (products, orders, etc.).
+We will use a separate Google Sheet document to use during testing. This keeps development data seprate from test data, and allows for experimentation when testing.
+
+To setup the test document, follow a modified version of the Google Sheets Database Setup:
+  1. Create a copy of the Google Sheet document you setup via the Google Sheets Database Setup (including the "products" and "orders" sheet with the proper column identifiers)
+  2. Share this document with your service account's email address, giving it "Editor" priviges.
+  3. Note the document's identifier from the URL bar, and set it as an environment variable called `GOOGLE_SHEETS_TEST_DOCUMENT_ID`, by adding this environment variable to the ".env" file.
+
+After the test document has been setup, you should be able to run tests.
 
 Running tests:
 
@@ -116,12 +136,6 @@ pytest
 ## Continuous Integration
 
 See the [GitHub Actions Guide](/docs/GITHUB_ACTIONS.md) for more information about configuring the Continuous Integration (CI) build process.
-
-Running tests in CI mode:
-
-```sh
-CI=true pytest
-```
 
 ## Deploying / Hosting
 
