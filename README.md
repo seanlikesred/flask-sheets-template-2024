@@ -4,7 +4,9 @@ A web application starter template, created in Python with the Flask framework. 
 
 ![](./docs/images/products-page-screenshot.png)
 
-## Prerequisites
+## Setup
+
+### Prerequisites
 
 This application requires a Python development environment with the following tools installed:
 
@@ -13,8 +15,6 @@ This application requires a Python development environment with the following to
 
 Beginners can consult the prof's [Python Development Environment Setup Guide](https://github.com/prof-rossetti/intro-to-python/blob/main/exercises/local-dev-setup/README.md#option-b-full-setup) ("Full Setup").
 
-
-## Setup
 
 ### Repo Setup
 
@@ -31,9 +31,9 @@ cd ~/Desktop/flask-sheets-template-2024
 > NOTE: it is important to navigate to the root directory before running any of the commands below.
 
 
-### Anaconda Virtual Environment Setup
+### Virtual Environment Setup
 
-Create new virtual environment (first time only):
+Create new Anaconda virtual environment (first time only):
 
 ```sh
 conda create -n flask-sheets-2024 python=3.10
