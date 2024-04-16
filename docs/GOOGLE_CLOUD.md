@@ -47,15 +47,12 @@ Find the service account you just created in the "Service Accounts" section of t
 
 ![](/docs/images/service-account-json.png)
 
-Then download the resulting JSON key file into the root directory of this repo, and rename it to "google-credentials.json".
+Then download the resulting JSON key file into the root directory of this repo, and rename it to "google-credentials.json". It is important to have this file in the root directory of the repository, specifically called "google-credentials.json". This file has been ignored from version control for security reasons (see ".gitignore" file), and therefore should NOT be tracked in version control or uploaded to GitHub.
 
 ## Enabling APIs
 
 In the Google APIs project console, from the "Enabled APIs and Services" page, search for and enable the "Google Sheets API".
 
-
 ![](/docs/images/google-cloud-enable-apis-services.png)
-
-![](/docs/images/google-cloud-enable-sheets-api.png)
 
 If you would like to use additional APIs in the future (for example Google Calendar API for a calendar integration), you will need to come back and enable them separately.

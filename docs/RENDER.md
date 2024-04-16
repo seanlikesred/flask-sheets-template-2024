@@ -8,9 +8,9 @@ References:
 
 ## Repo Setup
 
-Ensure the `gunicorn` package is listed in the "requirements.txt" file and commit and push before moving forward.
+Ensure the `gunicorn` package is listed in the "requirements.txt" file and commit and push before moving forward. This step has been done already.
 
-## Google Sheet Setup
+## Google Sheet Setup, Revisited
 
 You may want to create a separate copy of the Google Sheet database to use in production. If you do, specify the production document's identifier as the `GOOGLE_SHEETS_DOCUMENT_ID` environment variable when configuring the server (see below). This will allow you to keep user data separate from development and test data.
 
@@ -53,6 +53,6 @@ Click "Create web service" and wait a few moments as your code is deployed. Then
 
 ## Google Cloud Setup, Revisited
 
-To make the login functionality work, revisit the OAuth Client setup (see Google Cloud Setup Guide), and configure a new redirect URL pointing to the render server: "https://YOUR_RENDER_APP.onrender.com/auth/google/callback", and save the changes.
+To make the login functionality work, revisit the OAuth Client setup (see Google Cloud Setup Guide), and configure a new redirect URL pointing to the render server (like "https://YOUR_RENDER_APP.onrender.com/auth/google/callback"), and save the changes.
 
 FYI - while the OAuth Client is still in test mode, you may need to allow certain individuals to use the hosted app, by specifing a number of email addresses as "Test Users" in the OAuth Consent Screen. Once your app is out of test mode, anyone with a Google Account should be able to login to the hosted app.
