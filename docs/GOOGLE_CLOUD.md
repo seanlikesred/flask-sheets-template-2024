@@ -33,7 +33,7 @@ Return to actually creating the "OAuth Client Id" from the Credentials page. Cho
 > FORESHADOWING: after you deploy the app to a hosted site, you will need to return here to configure an additional redirect URL pointing to your hosted site.
 
 
-After the OAuth Client is created, note the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and set them as environment variables via the ".env" file (see README)
+After the OAuth Client is created, note the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`, and set them as environment variables via the ".env" file (see README).
 
 ![](/docs/images/oauth-client-secrets.png)
 
@@ -58,4 +58,4 @@ In the Google APIs project console, from the "Enabled APIs and Services" page, s
 
 ![](/docs/images/google-cloud-enable-sheets-api.png)
 
-If you would like to use additional APIs in the future (for example Google Calendar API for a calendar integration), you will need to come back and enable them sepearately in the future.
+If you would like to use additional APIs in the future (for example Google Calendar API for a calendar integration), you will need to come back and enable them separately.

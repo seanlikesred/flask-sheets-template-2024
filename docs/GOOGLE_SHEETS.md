@@ -11,6 +11,8 @@ Create a new Google Sheet document. Note the document identifier, and set it as 
 
 The app will need read and write access to this document. Modify the document's sharing settings to grant "Edit" privileges to the "client email" address specified in the Google API service account credentials JSON file (e.g. "my-serice@my-project.iam.gserviceaccount.com").
 
+![](/docs/images/google-sheet-share-service-account-editor.png)
+
 ## Sheets Setup
 
 Create two example sheets. One called "products" and the other called "orders".
