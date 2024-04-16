@@ -47,7 +47,9 @@ Find the service account you just created in the "Service Accounts" section of t
 
 ![](/docs/images/service-account-json.png)
 
-Then download the resulting JSON key file into the root directory of this repo, and rename it to "google-credentials.json". It is important to have this file in the root directory of the repository, specifically called "google-credentials.json". This file has been ignored from version control for security reasons (see ".gitignore" file), and therefore should NOT be tracked in version control or uploaded to GitHub.
+Then download the resulting JSON key file into the root directory of this repo, and rename it to "google-credentials.json".
+
+> NOTE: it is important to have this file in the root directory of the repository, specifically called "google-credentials.json". This file has been ignored from version control for security reasons (see ".gitignore" file), and therefore should NOT be tracked in version control or uploaded to GitHub.
 
 ## Enabling APIs
 

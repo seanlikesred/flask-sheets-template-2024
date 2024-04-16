@@ -15,7 +15,7 @@ The app will need read and write access to this document. Modify the document's 
 
 ## Sheets Setup
 
-Create two example sheets. One called "products" and the other called "orders".
+In the spreadsheet document itself, create two example sheets. One called "products" and the other called "orders".
 
 On the "products" sheet, populate the first row with the following column headers:
 

@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This document will provide instructions for how to host this application on a production server provided by the Render platform.
+This document provides instructions for how to host this application on a user-facing production server provided by the Render platform.
 
 References:
 
@@ -50,6 +50,8 @@ SECRET_KEY="___________"
 Set a [secret configuration file](https://community.render.com/t/using-google-application-credentials-json/6885) called "google-credentials.json", and paste the contents from your google service account credentials JSON file. Make sure there isn't an extra space or new line at the end! The render web service will then have access to the file as "/etc/secrets/google-credentials.json" (as designated by the `GOOGLE_CREDENTIALS_FILEPATH` environment variable set on the server).
 
 Click "Create web service" and wait a few moments as your code is deployed. Then visit the hosted site at the designated URL.
+
+> FYI: the free tier can take a few moments to spin up after periods of inactivity. It is possible to upgrade server tiers later to remove this limitation.
 
 ## Google Cloud Setup, Revisited
 
