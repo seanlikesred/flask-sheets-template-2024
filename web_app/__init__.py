@@ -15,6 +15,7 @@ from web_app.routes.auth_routes import auth_routes
 from web_app.routes.user_routes import user_routes
 from web_app.routes.product_routes import product_routes
 from web_app.routes.order_routes import order_routes
+from web_app.routes.spotify_routes import spotify_routes
 
 load_dotenv()
 
@@ -43,8 +44,13 @@ def create_app():
     app.config["APP_VERSION"] = APP_VERSION
     # for client-side google analytics:
     app.config["GA_TRACKER_ID"] = GA_TRACKER_ID
+
+    # output JSON in a human friendly way (JK?)
+    #app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
     # set timezone to mimic production mode when running locally:
     os.environ["TZ"] = "UTC"
+
 
     #
     # AUTH
@@ -70,6 +76,8 @@ def create_app():
     app.register_blueprint(user_routes)
     app.register_blueprint(product_routes)
     app.register_blueprint(order_routes)
+
+    app.register_blueprint(spotify_routes)
 
     return app
 

@@ -1,6 +1,10 @@
 
 *.DS_Store
 
+
+.cache-*
+
+
 # Ignore Google Service Account credentials JSON file(s)
 google-credentials.json
 google-credentials-prod.json
