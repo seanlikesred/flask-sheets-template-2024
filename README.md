@@ -25,7 +25,7 @@ Using GitHub Desktop or the command line, clone your copy of the repo to downloa
 Using GitHub Desktop or the command line, navigate to the local repo (for example if on the Desktop):
 
 ```sh
-cd ~/Desktop/flask-sheets-template-2024
+cd ~/Desktop/flask-sheets-template-2024 
 ```
 
 > NOTE: it is important to navigate to the root directory before running any of the commands below.
